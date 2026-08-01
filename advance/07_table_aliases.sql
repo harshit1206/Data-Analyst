@@ -1,0 +1,1 @@
+-- alaises is going to make your queries shorter and easier to read 
