@@ -493,3 +493,192 @@ Close & Apply
         ↓
 Clean Data Loaded into Power BI
 ```
+
+
+# Section 3: Data Modeling & DAX
+
+> These notes are based only on the provided content. Each topic contains a theory section followed by step-by-step implementation in Power BI.
+
+## 1. Semantic Models, Fact Tables & Dimension Tables
+
+### Theory
+
+As the amount of data in a company increases, storing everything in a single table with hundreds of columns and thousands of rows becomes inefficient. Such flat tables consume more memory, slow down report performance, and make analysis difficult. To solve this problem, Power BI uses Data Modeling, where data is divided into multiple related tables connected through relationships.
+
+A Fact Table is the central table that stores measurable business data such as Sales, Quantity, Revenue, Profit, and Prices. It also contains foreign keys that connect it with different Dimension Tables. A Dimension Table stores descriptive information like Customer Name, Product Category, Product Name, Date, Month, and Year. These tables provide context to the values stored in the Fact Table.
+
+Power BI follows the Star Schema, where one Fact Table is connected to multiple independent Dimension Tables using Primary Key–Foreign Key relationships. This structure improves performance, reduces redundancy, and makes reporting easier.
+
+### Practical Implementation
+
+#### Import the Dataset
+
+1. Open Power BI Desktop.
+2. Click **Get Data**.
+3. Select **Excel Workbook**.
+4. Open **Section 3 Model and DAX.xlsx**.
+5. Select `dim_customer`, `dim_date`, `dim_product`, and `fact_sales`.
+6. Click **Transform Data**.
+7. Verify the tables.
+8. Click **Close & Apply**.
+
+#### Explore the Views
+
+- **Report View** - Build reports and visuals.
+- **Table View** - View data and create DAX columns/measures.
+- **Model View** - Create relationships and manage the data model.
+
+---
+
+## 2. Managing Relationships
+
+### Theory
+
+Relationships connect multiple tables so Power BI understands how data is related. Without relationships, Power BI treats each table independently, causing incorrect calculations and repeated values in reports. Relationships are generally created between the Primary Key of a Dimension Table and the Foreign Key of a Fact Table.
+
+The recommended Cardinality is **Many-to-One (*:1)** from the Fact Table to the Dimension Table. Keep the Cross Filter Direction as **Single** because it provides better performance. Active relationships appear as solid lines, whereas inactive relationships appear as dotted lines.
+
+### Practical Implementation
+
+#### Demonstrate the Problem
+
+1. Go to **Report View**.
+2. Insert a **Matrix Visual**.
+3. Drag **product_name** into **Rows**.
+4. Drag **total_sales** into **Values**.
+5. Notice that every product shows the same sales because no relationship exists.
+
+#### Create Relationships
+
+1. Open **Model View**.
+2. Click **Manage Relationships**.
+3. Delete all auto-created relationships.
+4. Click **New**.
+5. Connect `fact_sales.product_id` with `dim_product.product_id`.
+6. Set Cardinality to **Many-to-One (*:1)**.
+7. Set Cross Filter Direction to **Single**.
+8. Repeat for `customer_id` and `date`.
+
+#### Verify
+
+Return to Report View and verify that each product now displays the correct sales.
+
+---
+
+## 3. Creating Custom Date Hierarchies
+
+### Theory
+
+A hierarchy groups related fields together, allowing users to drill down through different levels of information. For dates, the standard hierarchy is Year → Quarter → Month → Day. This makes reports interactive and helps users analyze data at different levels.
+
+### Practical Implementation
+
+1. Open **Model View**.
+2. Right-click **Year**.
+3. Select **Create Hierarchy**.
+4. Rename it to **Year Hierarchy**.
+5. Add **Quarter**, **Month**, and **Day** to the hierarchy.
+6. Go to **Report View**.
+7. Drag the hierarchy into a Matrix Visual.
+8. Use the **+ / -** buttons to drill down.
+
+---
+
+## 4. Calculated Columns vs Measures
+
+### Theory
+
+Power BI provides Calculated Columns and Measures for performing calculations using DAX. A Calculated Column performs calculations row by row and stores the result in the table, increasing memory usage. A Measure calculates values dynamically according to the current filter context and does not store results, making it more efficient for reporting.
+
+| Feature | Calculated Column | Measure |
+|---|---|---|
+| Evaluation | Row Context | Filter Context |
+| Storage | Stored | Dynamic |
+| Memory | Higher | Lower |
+
+### Practical Implementation
+
+#### Create a Calculated Column
+
+1. Right-click **fact_sales**.
+2. Select **New Column**.
+3. Enter:
+
+```DAX
+Total Revenue =
+fact_sales[total_sales] +
+(fact_sales[total_sales] * 0.18)
+```
+
+#### Create a Measure
+
+1. Right-click **fact_sales**.
+2. Select **New Measure**.
+3. Enter:
+
+```DAX
+Sum of Sales =
+SUM(fact_sales[total_sales])
+```
+
+4. Add the measure to a Card Visual.
+
+---
+
+## 5. DAX Aggregation Functions
+
+### Theory
+
+Aggregation functions summarize multiple rows into a single value and are mainly used inside Measures.
+
+### SUM()
+
+```DAX
+Total Sales = SUM(fact_sales[total_sales])
+```
+
+Implementation:
+1. Create a New Measure.
+2. Paste the formula.
+3. Add it to a Card Visual.
+
+### AVERAGE()
+
+```DAX
+Average Sales = AVERAGE(fact_sales[total_sales])
+```
+
+Implementation:
+1. Create a New Measure.
+2. Paste the formula.
+3. Add it to a visual.
+
+### DISTINCTCOUNT()
+
+```DAX
+Unique Customers = DISTINCTCOUNT(fact_sales[customer_id])
+```
+
+Implementation:
+1. Create a New Measure.
+2. Paste the formula.
+3. Display it in a Card Visual.
+
+### MAX()
+
+```DAX
+Max Quantity = MAX(fact_sales[quantity])
+```
+
+### MIN()
+
+```DAX
+Min Unit Price = MIN(fact_sales[unit_price])
+```
+
+### Formatting Measures
+
+1. Select the Measure.
+2. Open **Measure Tools**.
+3. Choose **Whole Number** or **Decimal Number**.
+
