@@ -682,3 +682,136 @@ Min Unit Price = MIN(fact_sales[unit_price])
 2. Open **Measure Tools**.
 3. Choose **Whole Number** or **Decimal Number**.
 
+
+# 6. DAX Logical & Filter Context Functions
+
+Logical functions are used to make decisions based on conditions, while Filter Context functions control how data is filtered during calculations.
+
+---
+
+# A. Logical Functions
+
+## IF()
+
+### Theory
+
+The **IF()** function checks whether a condition is true or false and returns different values based on the result. It is commonly used to categorize data.
+
+### Syntax
+
+```DAX
+IF(logical_test, value_if_true, value_if_false)
+```
+
+### Practical Implementation
+
+1. Right-click **fact_sales**.
+2. Select **New Column**.
+3. Enter the IF() formula.
+4. Press **Enter**.
+
+---
+
+## SWITCH()
+
+### Theory
+
+The **SWITCH()** function is used when multiple conditions need to be checked. It is cleaner and easier to read than using multiple nested IF statements.
+
+### Syntax
+
+```DAX
+SWITCH(expression, value1, result1, value2, result2, else_result)
+```
+
+### Practical Implementation
+
+1. Right-click **fact_sales**.
+2. Select **New Column**.
+3. Enter the SWITCH() formula.
+4. Press **Enter**.
+
+---
+
+## IFERROR()
+
+### Theory
+
+The **IFERROR()** function returns a specified value if a calculation results in an error. It helps avoid displaying error messages in reports.
+
+### Syntax
+
+```DAX
+IFERROR(value, value_if_error)
+```
+
+### Practical Implementation
+
+1. Create a **New Column** or **New Measure**.
+2. Enter the IFERROR() formula.
+3. Press **Enter**.
+
+---
+
+# B. Filter Context Functions
+
+## CALCULATE()
+
+### Theory
+
+The **CALCULATE()** function changes or applies filters before performing a calculation. It is one of the most important DAX functions.
+
+### Syntax
+
+```DAX
+CALCULATE(expression, filter)
+```
+
+### Practical Implementation
+
+1. Right-click **fact_sales**.
+2. Select **New Measure**.
+3. Enter the CALCULATE() formula.
+4. Add the measure to a **Card Visual**.
+5. Test it using a **Region Slicer**.
+
+---
+
+## FILTER()
+
+### Theory
+
+The **FILTER()** function returns a filtered table based on a condition. It is mostly used inside the CALCULATE() function.
+
+### Syntax
+
+```DAX
+FILTER(table, condition)
+```
+
+### Practical Implementation
+
+1. Create a **New Measure**.
+2. Write the FILTER() function inside **CALCULATE()**.
+3. Add the measure to a visual.
+
+---
+
+## ALL()
+
+### Theory
+
+The **ALL()** function removes all filters from a table or column. It is used when you want calculations to ignore slicers or report filters.
+
+### Syntax
+
+```DAX
+ALL(table_or_column)
+```
+
+### Practical Implementation
+
+1. Create a **New Measure**.
+2. Enter the ALL() formula.
+3. Add a **Region Slicer**.
+4. Place the measure in a **Card Visual** and observe that the value remains unchanged.
