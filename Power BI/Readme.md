@@ -815,3 +815,427 @@ ALL(table_or_column)
 2. Enter the ALL() formula.
 3. Add a **Region Slicer**.
 4. Place the measure in a **Card Visual** and observe that the value remains unchanged.
+
+# 7. DAX Time Intelligence, Relationship Navigation & Variables
+
+Time Intelligence functions help analyze data over different time periods such as Month-to-Date (MTD), Year-over-Year (YoY), or previous months. These functions require a properly formatted **Date** column in both the Fact and Dimension tables. Relationship Navigation functions retrieve data from related tables, while Variables make DAX formulas easier to read and improve performance.
+
+---
+
+# A. Time Intelligence Functions
+
+## TOTALMTD() / DATESMTD()
+
+### Theory
+
+**TOTALMTD()** calculates the total value from the beginning of the current month up to the selected date. **DATESMTD()** returns all dates from the start of the month to the current date and is often used with `CALCULATE()`.
+
+### Practical Implementation
+
+1. Right-click **fact_sales**.
+2. Select **New Measure**.
+3. Enter the `TOTALMTD()` or `CALCULATE()` with `DATESMTD()` formula.
+4. Add the measure to a visual.
+5. Ensure the **Date** column is of Date data type.
+
+---
+
+## SAMEPERIODLASTYEAR()
+
+### Theory
+
+The **SAMEPERIODLASTYEAR()** function returns values for the same period in the previous year. It is commonly used for Year-over-Year (YoY) comparisons.
+
+### Practical Implementation
+
+1. Create a **New Measure**.
+2. Use `SAMEPERIODLASTYEAR()` inside `CALCULATE()`.
+3. Add the measure to a visual to compare current and previous year values.
+
+---
+
+## DATEADD()
+
+### Theory
+
+The **DATEADD()** function shifts the current date context by a specified number of years, quarters, months, or days. It is useful for comparing different time periods.
+
+### Practical Implementation
+
+1. Create a **New Measure**.
+2. Use the `DATEADD()` function with the required interval.
+3. Display the measure in a report visual.
+
+---
+
+# B. Relationship Navigation Functions
+
+## RELATED()
+
+### Theory
+
+The **RELATED()** function retrieves a value from a related Dimension Table into the Fact Table. It only works when an **active relationship** exists between the tables.
+
+### Practical Implementation
+
+1. Right-click **fact_sales**.
+2. Select **New Column**.
+3. Enter the `RELATED()` formula.
+4. Press **Enter**.
+
+---
+
+## LOOKUPVALUE()
+
+### Theory
+
+The **LOOKUPVALUE()** function retrieves a value by matching columns manually. It is useful when there is **no active relationship** between the tables.
+
+### Practical Implementation
+
+1. Right-click **fact_sales**.
+2. Select **New Column**.
+3. Enter the `LOOKUPVALUE()` formula.
+4. Press **Enter**.
+
+---
+
+# C. DAX Variables
+
+## VAR & RETURN
+
+### Theory
+
+Variables make DAX formulas easier to read, improve performance, and avoid repeating the same calculation multiple times. A variable is declared using **VAR**, and the final result is returned using **RETURN**.
+
+### Example
+
+```DAX
+Sales Margin =
+VAR Cost = 0.8 * SUM(fact_sales[total_sales])
+VAR Revenue = SUM(fact_sales[total_sales])
+RETURN
+Revenue - Cost
+```
+
+### Practical Implementation
+
+1. Right-click **fact_sales**.
+2. Select **New Measure**.
+3. Write the variables using `VAR`.
+4. Return the final result using `RETURN`.
+5. Press **Enter** and use the measure in a report.
+
+# 8. Visual Calculations, Field Parameters & Performance Analyzer
+
+---
+
+# A. Visual Calculations
+
+### Theory
+
+Visual Calculations allow you to perform calculations directly inside a visual without creating a permanent Measure. These calculations are limited to that visual and are useful for quick analysis.
+
+### Practical Implementation
+
+1. Select a **Table Visual**.
+2. Click **New Visual Calculation**.
+3. Choose **Running Sum**.
+4. Select the **total_sales** column.
+
+---
+
+# B. Field Parameters
+
+### Theory
+
+Field Parameters allow users to switch between different measures or fields using a slicer. This makes reports more interactive and reduces the need for multiple visuals.
+
+### Practical Implementation
+
+1. Go to **Modeling** → **New Parameter** → **Fields**.
+2. Name it **Metric Picker**.
+3. Select **Total Sales** and **Quantity Sum**.
+4. Check **Add slicer to this page**.
+5. Use the slicer to switch between the selected measures.
+
+---
+
+# C. Performance Analyzer
+
+### Theory
+
+Performance Analyzer helps identify slow visuals by showing the time taken for DAX queries, visual rendering, and other processing tasks. It is mainly used to optimize report performance.
+
+### Practical Implementation
+
+1. Go to the **View** tab.
+2. Enable **Performance Analyzer**.
+3. Click **Start Recording**.
+4. Click **Refresh Visuals**.
+5. Expand a visual to view its execution time.
+
+---
+
+## Performance Optimization Tips
+
+- Use **Import Mode** instead of **DirectQuery** whenever possible.
+- Optimize DAX formulas using **VAR**.
+- Remove unused columns and tables.
+- Disable unnecessary automatic refreshes.
+
+# Section 4: Visualization
+
+Visualization helps convert raw data into meaningful charts and dashboards, making it easier to identify trends, compare values, and make business decisions.
+
+---
+
+# 1. Power BI Report Structure & Panes
+
+## Theory
+
+A Power BI report is divided into multiple **Pages** instead of placing all visuals on one screen. Each page focuses on a specific analysis, making reports clean and organized. Every page contains a **Canvas**, which is the workspace where charts, tables, cards, maps, slicers, and other visuals are placed.
+
+Power BI also provides three filter levels to control how data is displayed and different panes to build and manage reports efficiently.
+
+### Practical Implementation
+
+### Create Report Pages
+
+1. Open **Power BI Desktop**.
+2. Click the **+** icon beside **Page 1**.
+3. Rename the page.
+4. Add visuals to the canvas.
+
+### Apply Filters
+
+**Visual-Level Filter**
+
+1. Select a visual.
+2. Drag a field into **Filters on this visual**.
+3. Apply the required filter.
+
+**Page-Level Filter**
+
+1. Drag a field into **Filters on this page**.
+2. Select the required values.
+3. All visuals on that page are filtered.
+
+**Report-Level Filter**
+
+1. Drag a field into **Filters on all pages**.
+2. Select the required value.
+3. The entire report is filtered.
+
+### Important Panes
+
+- **Fields Pane** → Contains tables, columns, and DAX measures.
+- **Visualizations Pane** → Used to insert charts.
+- **Formatting Pane** → Used to customize visuals.
+- **Selection Pane** → Used to hide/show visuals (**View → Selection Pane**).
+
+---
+
+# 2. Selecting the Appropriate Visual
+
+## Theory
+
+Choosing the correct chart helps present data clearly and improves storytelling. Different visuals are designed for different types of analysis.
+
+| Visual | Used For |
+|---------|----------|
+| Bar/Column Chart | Compare categories |
+| Line/Area Chart | Trends over time |
+| Pie/Donut Chart | Part-to-whole comparison |
+| Tree Map | Compare category sizes |
+| Funnel | Process stages |
+| Map | Regional analysis |
+| KPI Card | Single important value |
+| Gauge | Target vs Achievement |
+| Table/Matrix | Detailed data |
+
+### Practical Implementation
+
+1. Select a visual from the **Visualizations Pane**.
+2. Drag the required fields into the visual.
+3. Resize and position it on the canvas.
+4. Format the visual if required.
+
+---
+
+# 3. Formatting a Visual
+
+## Theory
+
+Formatting improves the appearance of reports and makes charts easier to read. Power BI allows customization of axes, titles, colors, borders, shadows, labels, and gridlines.
+
+### Practical Implementation
+
+### X-Axis
+
+1. Select the chart.
+2. Open **Formatting Pane**.
+3. Expand **X-Axis**.
+4. Set **Font Color = Black**.
+5. Turn **Bold ON**.
+6. Set **Font Size = 10**.
+7. Turn **Title OFF**.
+
+### Y-Axis
+
+1. Expand **Y-Axis**.
+2. Turn **Title OFF**.
+3. Make labels **Bold**.
+
+### Data Labels
+
+1. Expand **Data Labels**.
+2. Turn **ON** to display values.
+
+### Gridlines
+
+1. Expand **Gridlines**.
+2. Reduce the opacity so they are less distracting.
+
+### Title
+
+1. Go to **General → Title**.
+2. Align the title to **Center**.
+3. Change the font if required.
+
+### Divider Line
+
+1. Under **General**, enable **Divider**.
+2. Set **Padding = 5**.
+
+### Border & Shadow
+
+1. Expand **Effects**.
+2. Turn **Border ON**.
+3. Turn **Shadow ON**.
+4. Set **Position = Center**.
+
+### Column Colors
+
+1. Expand **Columns**.
+2. Change colors for individual categories.
+
+---
+
+# 4. Building Report Pages
+
+## Theory
+
+Reports are usually divided into multiple pages, where each page focuses on a different business analysis. This makes dashboards organized and easier to understand.
+
+### Practical Implementation
+
+### Page 1 – Sales Overview
+
+Create the following visuals:
+
+- **Clustered Column Chart**
+  - X-Axis → Product Name
+  - Y-Axis → Total Sales
+
+- **Line Chart**
+  - X-Axis → Month Name
+  - Y-Axis → Total Sales
+
+- **Funnel Chart**
+  - Category → Region
+  - Values → Total Sales
+
+- **Waterfall Chart**
+  - Category → Month
+  - Values → Profit
+
+Create a Profit Measure:
+
+```DAX
+Profit =
+SUM(fact_sales[total_sales]) - SUM(fact_sales[cost])
+```
+
+---
+
+### Page 2 – Regional Dashboard
+
+Create:
+
+- Donut Chart → Category vs Total Sales
+- Tree Map → Product Name vs Profit
+- Map → Region & Total Sales
+- Multi-Row Card
+  - Total Sales
+  - Quantity
+  - Distinct Customers
+  - Average Unit Price
+
+Measures:
+
+```DAX
+Customers =
+DISTINCTCOUNT(fact_sales[customer_id])
+```
+
+```DAX
+Average Unit Price =
+AVERAGE(dim_product[unit_price])
+```
+
+### Gauge Chart
+
+Create:
+
+```DAX
+Target = 1000000
+```
+
+```DAX
+Minimum Target = 75000
+```
+
+```DAX
+Maximum Target = 1100000
+```
+
+Add these measures to the Gauge Visual.
+
+---
+
+# 5. Dynamic Interactivity (Slicers & Sync)
+
+## Theory
+
+Slicers allow users to filter report data interactively without changing the original dataset. Sync Slicers apply the same filter across multiple report pages, making dashboards more user-friendly.
+
+### Practical Implementation
+
+### Matrix Visual
+
+1. Insert **Matrix Visual**.
+2. Add:
+   - Rows → Region, Product Name
+   - Columns → Category
+   - Values → Total Sales
+
+### Region Slicer
+
+1. Insert a **Slicer**.
+2. Drag **Region** into it.
+3. Change **Style = Tiles**.
+
+### Sync Slicers
+
+1. Go to **View**.
+2. Enable **Sync Slicers**.
+3. Select the Region slicer.
+4. Enable Sync for **Page 1** and **Page 2**.
+
+### Year Slicer
+
+1. Insert another **Slicer**.
+2. Drag **Year** into it.
+3. Change the style to **Tiles**.
+4. Select **2023** or **2024** to filter the report.
