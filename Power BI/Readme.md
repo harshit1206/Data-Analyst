@@ -125,379 +125,417 @@ automatic refresh.
 
 # SECTION 2 : Data Preparation
 
-## Get Data
+Data Preparation is the process of collecting, cleaning, and transforming raw data before creating reports. Clean data improves report performance, accuracy, and makes analysis easier.
 
-### Identify & Connect to Data Sources
+---
 
-Power BI supports Excel, CSV, SQL Server, PDFs, SharePoint, Azure,
-Fabric, and many other data sources.
+# 1. Get Data
 
-### Storage Modes
+## Identify & Connect to Data Sources
 
-#### Import
+### Theory
 
-Stores a copy of data inside Power BI. Fastest performance but requires
-refresh when source data changes.
+Power BI supports multiple data sources such as **Excel, CSV, SQL Server, PDFs, SharePoint, Azure, Fabric**, and many others. It allows users to connect to different data sources and import or query the required data for analysis.
 
-#### DirectQuery
+### Practical Implementation
 
-Keeps data in the source database and fetches it live. No local storage
-but performance depends on the database.
+1. Open **Power BI Desktop**.
+2. Click **Home → Get Data**.
+3. Select the required data source (Excel, CSV, SQL Server, etc.).
+4. Browse and select the file or database.
+5. Click **Open** or **Connect**.
+6. Select the required tables.
+7. Click **Load** or **Transform Data**.
 
-#### Dual
+---
 
-Combination of Import and DirectQuery for balancing speed and live data.
+## Storage Modes
 
-#### Direct Lake
+### Theory
 
-Used with Microsoft Fabric to access lakehouse data without importing
-it.
+Storage Modes determine how Power BI stores and retrieves data. Selecting the appropriate mode improves report performance and ensures data is updated according to business requirements.
 
-------------------------------------------------------------------------
+---
 
-# Power Query Editor
+### Import
+
+#### Theory
+
+Import Mode stores a copy of the data inside Power BI. It provides the best performance but requires a dataset refresh whenever the source data changes.
+
+#### Practical Implementation
+
+1. Connect to a data source.
+2. Select the required tables.
+3. Choose **Import**.
+4. Click **Load**.
+5. Refresh the dataset whenever the source data changes.
+
+---
+
+### DirectQuery
+
+#### Theory
+
+DirectQuery does not import data into Power BI. Instead, it queries the source database whenever a report is viewed or filtered, ensuring real-time data.
+
+#### Practical Implementation
+
+1. Connect to a supported database.
+2. Select **DirectQuery** as the storage mode.
+3. Choose the required tables.
+4. Create reports using live data.
+
+---
+
+### Dual
+
+#### Theory
+
+Dual Mode combines both Import and DirectQuery. Frequently used tables are imported for faster performance, while other tables remain connected to the live source.
+
+#### Practical Implementation
+
+1. Open **Model View**.
+2. Select the required table.
+3. Change **Storage Mode** to **Dual** from the Properties pane.
+
+---
+
+### Direct Lake
+
+#### Theory
+
+Direct Lake is used with Microsoft Fabric to access Lakehouse data directly without importing it into Power BI. It provides fast performance while keeping data in the source.
+
+#### Practical Implementation
+
+1. Connect to a **Microsoft Fabric Lakehouse**.
+2. Select **Direct Lake**.
+3. Load the required tables.
+4. Start building reports.
+
+---
+
+# 2. Power Query Editor
+
+Power Query Editor is used to clean, transform, and prepare data before loading it into Power BI. Every transformation performed is stored as an Applied Step and can be edited later.
+
+---
 
 ## Home Tab
-Used for basic operations like loading data, removing or renaming columns, changing data types, promoting headers, and applying changes to the dataset.
 
-**Example:**
+### Theory
 
-**Before**
+The **Home Tab** contains the most commonly used options for data preparation. It is used to load data, rename or remove columns, change data types, promote headers, and apply transformations.
 
-| Column1 | Column2 | Column3 |
-|---------|---------|---------|
-| Name | Age | City |
-| Harshit | 20 | Ludhiana |
+### Practical Implementation
 
-**Action:** Use **Use First Row as Headers**
+#### Open Power Query Editor
 
-**After**
+1. Open **Power BI Desktop**.
+2. Click **Home → Transform Data**.
 
-| Name | Age | City |
-|------|-----|------|
-| Harshit | 20 | Ludhiana |
+#### Use First Row as Headers
+
+1. Select the required table.
+2. Go to the **Home** tab.
+3. Click **Use First Row as Headers**.
+4. Verify that the first row becomes the column names.
 
 ---
 
 ## Transform Tab
-Used to modify existing columns without creating new ones. It is mainly used for cleaning and standardizing data.
 
-**Example:**
+### Theory
 
-| Before | Transformation | After |
-|--------|---------------|-------|
-| `" harshit "` | Trim | `"harshit"` |
-| `"DELHI"` | Capitalize Each Word | `"Delhi"` |
-| `"N/A"` | Replace Value | `"Unknown"` |
+The **Transform Tab** is used to modify existing columns without creating new ones. It helps clean and standardize data by trimming spaces, replacing values, changing text case, splitting columns, and changing data types.
+
+### Practical Implementation
+
+1. Open **Power Query Editor**.
+2. Select the required column.
+3. Go to the **Transform** tab.
+4. Choose the required transformation such as **Trim**, **Replace Values**, or **Capitalize Each Word**.
+5. Verify the updated values.
 
 ---
 
 ## Add Column Tab
-Used to create a new column while keeping the original columns unchanged.
 
-**Example:**
+### Theory
 
-| Product | Quantity | Price | Total Sale |
-|---------|---------:|------:|-----------:|
-| Laptop | 2 | 50000 | 100000 |
-| Mouse | 5 | 500 | 2500 |
+The **Add Column Tab** is used to create new columns while keeping the original columns unchanged. It is mainly used for creating calculated columns using formulas.
 
-**Formula**
+### Practical Implementation
 
-```text
-Total Sale = Quantity × Price
-```
+1. Open **Power Query Editor**.
+2. Go to the **Add Column** tab.
+3. Click **Custom Column**.
+4. Enter the column name.
+5. Write the required formula.
+6. Click **OK**.
 
 ---
 
 ## Applied Steps
-Displays every transformation performed in Power Query. You can edit, delete, rename, or reorder any step without affecting the original data source.
 
-**Example Workflow**
+### Theory
 
-```text
-Source
-↓
-Promoted Headers
-↓
-Changed Data Type
-↓
-Removed Columns
-↓
-Trimmed Text
-```
+The **Applied Steps** pane records every transformation performed in Power Query. Each step can be edited, deleted, renamed, or reordered without affecting the original data source.
+
+### Practical Implementation
+
+1. Open **Power Query Editor**.
+2. Perform any transformation.
+3. View the **Applied Steps** pane on the right.
+4. Click any step to review it.
+5. Right-click a step to **Rename**, **Delete**, or **Edit** it.
 
 ---
 
 ## Column Profiling
-Helps analyze the quality and statistics of each column by displaying valid values, empty values, errors, distinct values, minimum, maximum, and average.
 
-**Example:**
+### Theory
 
-```text
-Customer Name
+Column Profiling helps analyze the quality and statistics of data in each column. It displays information such as valid values, empty values, errors, distinct values, unique values, minimum, maximum, and average to identify data quality issues.
 
-Valid      : 95%
-Empty      : 3%
-Error      : 2%
+### Practical Implementation
 
-Distinct   : 120
-Unique     : 118
-```
+1. Open **Power Query Editor**.
+2. Go to the **View** tab.
+3. Enable **Column Quality**, **Column Distribution**, and **Column Profile**.
+4. Select the required column.
+5. Review the statistics displayed at the bottom of the window.
 
 ---
 
 # Cleaning & Transformation
 
+Data cleaning improves the quality of data by removing errors, inconsistencies, and unwanted values. Power Query provides several transformation tools to prepare data before loading it into Power BI.
+
+---
+
 ## Replace Values
-Replaces incorrect or unwanted values with meaningful values to improve data quality.
 
-**Example:**
+### Theory
 
-| Before | After |
-|--------|-------|
-| NULL | NA |
-| NULL | 0 |
-| Delhi NCR | Delhi |
+The **Replace Values** option is used to replace incorrect, null, or unwanted values with meaningful values. This helps improve data consistency and makes analysis more accurate.
+
+### Practical Implementation
+
+1. Select the required column.
+2. Go to **Transform → Replace Values**.
+3. Enter the value to find.
+4. Enter the replacement value.
+5. Click **OK**.
 
 ---
 
 ## Trim
-Removes extra spaces before and after the text.
 
-**Example**
+### Theory
 
-```text
-"   Punjab   "
+The **Trim** function removes extra spaces before and after text values. It helps standardize text data and prevents duplicate values caused by unwanted spaces.
 
-↓
+### Practical Implementation
 
-"Punjab"
-```
+1. Select the text column.
+2. Go to **Transform → Format → Trim**.
+3. Verify that extra spaces have been removed.
 
 ---
 
 ## Capitalize Each Word
-Converts text into proper title case.
 
-**Example**
+### Theory
 
-```text
-north india
+This option converts text into proper title case by capitalizing the first letter of every word. It helps maintain consistent formatting across the dataset.
 
-↓
+### Practical Implementation
 
-North India
-```
+1. Select the text column.
+2. Go to **Transform → Format → Capitalize Each Word**.
+3. Verify the updated text format.
 
 ---
 
 ## Use First Row as Headers
-Converts the first row of data into column names.
 
-**Before**
+### Theory
 
-| Column1 | Column2 | Column3 |
-|---------|---------|---------|
-| Name | Age | City |
-| Harshit | 20 | Ludhiana |
+This option converts the first row of data into column headers, making the dataset easier to understand and work with.
 
-**After**
+### Practical Implementation
 
-| Name | Age | City |
-|------|-----|------|
-| Harshit | 20 | Ludhiana |
+1. Select the required table.
+2. Go to **Home**.
+3. Click **Use First Row as Headers**.
+4. Verify that the first row becomes the column names.
 
 ---
 
 ## Naming Convention
-Use meaningful and consistent names for tables and columns.
 
-**Bad Naming**
+### Theory
 
-```text
-CustNm
-Pdt
-OrdDt
-```
+Using meaningful and consistent names for tables and columns improves readability and makes reports easier to maintain. Avoid abbreviations unless they are commonly understood.
 
-**Good Naming**
+### Practical Implementation
 
-```text
-CustomerName
-ProductID
-OrderDate
-```
+1. Right-click the table or column.
+2. Select **Rename**.
+3. Enter a meaningful name.
+4. Press **Enter** to save the changes.
 
 ---
 
 ## Text Before Delimiter
-Extracts the text before a selected symbol or delimiter.
 
-**Example**
+### Theory
 
-```text
-Email
+This option extracts all text before a specified delimiter such as **@**, **-**, or **/**. It is commonly used to separate usernames, IDs, or codes.
 
-harshit@gmail.com
+### Practical Implementation
 
-↓
-
-harshit
-```
+1. Select the required text column.
+2. Go to **Transform → Extract → Text Before Delimiter**.
+3. Enter the delimiter.
+4. Click **OK**.
 
 ---
 
 ## Text After Delimiter
-Extracts the text after a selected symbol or delimiter.
 
-**Example**
+### Theory
 
-```text
-Email
+This option extracts all text after a specified delimiter. It is useful for separating domains, file extensions, or other text values.
 
-harshit@gmail.com
+### Practical Implementation
 
-↓
-
-gmail.com
-```
+1. Select the required text column.
+2. Go to **Transform → Extract → Text After Delimiter**.
+3. Enter the delimiter.
+4. Click **OK**.
 
 ---
 
 ## Index Column
-Creates sequential row numbers that can be used as row identifiers or surrogate keys.
 
-**Example**
+### Theory
 
-| Customer | Index |
-|----------|------:|
-| Harshit | 1 |
-| Aman | 2 |
-| Rahul | 3 |
+The **Index Column** adds sequential numbers to each row. It is useful for creating row numbers or unique identifiers for records.
+
+### Practical Implementation
+
+1. Go to the **Add Column** tab.
+2. Click **Index Column**.
+3. Choose **From 0**, **From 1**, or **Custom**.
+4. Verify that index numbers are added.
 
 ---
 
 ## Custom Column
-Creates a new column using formulas based on existing columns.
 
-**Example**
+### Theory
 
-| Quantity | Price | Total Sale |
-|---------:|------:|-----------:|
-| 3 | 500 | 1500 |
-| 2 | 250 | 500 |
+A **Custom Column** allows you to create new columns using formulas based on existing columns. It is commonly used for calculations and derived values.
 
-**Formula**
+### Practical Implementation
 
-```text
-Total Sale = Quantity × Price
-```
+1. Go to the **Add Column** tab.
+2. Click **Custom Column**.
+3. Enter the column name.
+4. Write the required formula.
+5. Click **OK**.
 
 ---
 
 ## Conditional Column
-Creates a new column using IF-ELSE conditions.
 
-**Example**
+### Theory
 
-| Marks | Grade |
-|------:|-------|
-| 90 | Excellent |
-| 75 | Good |
-| 50 | Average |
-| 30 | Poor |
+A **Conditional Column** creates new values based on IF-ELSE conditions. It is useful for categorizing or grouping data automatically.
 
-**Condition**
+### Practical Implementation
 
-```text
-If Marks >= 80 → Excellent
-Else If Marks >= 60 → Good
-Else If Marks >= 40 → Average
-Else → Poor
-```
+1. Go to the **Add Column** tab.
+2. Click **Conditional Column**.
+3. Enter the column name.
+4. Define the required conditions.
+5. Click **OK** to create the column.
+
+---
+# Pivot, Unpivot & Transpose
+
+These transformation options are used to restructure data into a format that is easier to analyze and visualize in Power BI.
 
 ---
 
-# Pivot, Unpivot & Transpose
-
 ## Pivot
-Converts row values into separate columns.
 
-**Before**
+### Theory
 
-| Month | Sales |
-|--------|------:|
-| Jan | 100 |
-| Feb | 150 |
-| Mar | 120 |
+**Pivot** converts row values into separate columns. It is useful when you want to summarize data and display values horizontally instead of vertically.
 
-**After**
+### Practical Implementation
 
-| Jan | Feb | Mar |
-|----:|----:|----:|
-| 100 | 150 | 120 |
+1. Open **Power Query Editor**.
+2. Select the column that contains the values to be converted into columns.
+3. Go to **Transform → Pivot Column**.
+4. Select the value column.
+5. Choose the aggregation method if required.
+6. Click **OK**.
 
 ---
 
 ## Unpivot
-Converts multiple columns into two columns (**Attribute** and **Value**) for easier analysis.
 
-**Before**
+### Theory
 
-| Product | Jan | Feb | Mar |
-|---------|----:|----:|----:|
-| Laptop | 100 | 120 | 150 |
+**Unpivot** converts multiple columns into two columns named **Attribute** and **Value**. It is useful when preparing data for charts, tables, and other Power BI visuals.
 
-**After**
+### Practical Implementation
 
-| Product | Attribute | Value |
-|---------|-----------|------:|
-| Laptop | Jan | 100 |
-| Laptop | Feb | 120 |
-| Laptop | Mar | 150 |
+1. Open **Power Query Editor**.
+2. Select the columns to unpivot.
+3. Go to **Transform → Unpivot Columns**.
+4. Power BI creates **Attribute** and **Value** columns.
+5. Verify the transformed data.
 
 ---
 
 ## Transpose
-Interchanges rows and columns.
 
-**Before**
+### Theory
 
-| Name | Age |
-|------|----:|
-| Harshit | 20 |
-| Aman | 21 |
+**Transpose** swaps rows and columns. It is useful when the data orientation needs to be changed before analysis.
 
-**After**
+### Practical Implementation
 
-| Field | Value 1 | Value 2 |
-|-------|---------|---------|
-| Name | Harshit | Aman |
-| Age | 20 | 21 |
+1. Open **Power Query Editor**.
+2. Select the required table.
+3. Go to **Transform → Transpose**.
+4. Verify that rows and columns have been interchanged.
 
 ---
 
 ## Close & Apply
-Applies all the transformations made in Power Query and loads the cleaned data into the Power BI Data Model.
 
-**Workflow**
+### Theory
 
-```text
-Excel / SQL / CSV
-        ↓
-Power Query Editor
-(Remove Nulls, Trim, Replace Values)
-        ↓
-Close & Apply
-        ↓
-Clean Data Loaded into Power BI
-```
+**Close & Apply** saves all transformations performed in Power Query and loads the cleaned data into the Power BI Data Model. After applying the changes, the data becomes available for creating relationships, DAX calculations, and visualizations.
 
+### Practical Implementation
+
+1. Complete all required data transformations.
+2. Click **Home → Close & Apply**.
+3. Wait for Power BI to process the changes.
+4. Verify that the cleaned data is loaded into the **Data Model**.
+
+---
 
 # Section 3: Data Modeling & DAX
-
-> These notes are based only on the provided content. Each topic contains a theory section followed by step-by-step implementation in Power BI.
 
 ## 1. Semantic Models, Fact Tables & Dimension Tables
 
@@ -1239,3 +1277,98 @@ Slicers allow users to filter report data interactively without changing the ori
 2. Drag **Year** into it.
 3. Change the style to **Tiles**.
 4. Select **2023** or **2024** to filter the report.
+
+# 6. Advanced Navigation & Page Interaction
+
+Advanced navigation makes Power BI reports more interactive and user-friendly. Features like **Drill-Through**, **Page Navigation Buttons**, and **Bookmarks** allow users to navigate between pages, view detailed information, and switch between different report layouts without creating duplicate reports.
+
+---
+
+# A. Drill-Through Pages
+
+## Theory
+
+**Drill-Through** allows users to move from a summary report to a detailed report for a specific record. When a user right-clicks a data point, Power BI automatically opens another page filtered for that selected item.
+
+### Practical Implementation
+
+1. Create a new report page and rename it **Page 3**.
+2. On **Page 3**, drag **product_name** (from `dim_product`) into the **Drill-through** field.
+3. Power BI automatically adds a **Back Button** to the page.
+4. Add **Card Visuals** for:
+   - Product Name
+   - Category
+   - Unit Price
+5. Go back to **Page 2**.
+6. Right-click a product (e.g., **Smartphone**) in any visual.
+7. Select **Drill Through → Page 3**.
+8. Press **Ctrl + Click** on the **Back Button** to return to the previous page.
+
+---
+
+# B. Page Navigation Buttons
+
+## Theory
+
+Page Navigation Buttons allow users to move between report pages using custom buttons instead of the default page tabs, making dashboards more professional and easier to navigate.
+
+### Practical Implementation
+
+### Create a Next Page Button
+
+1. Go to **Insert → Buttons → Blank**.
+2. Select the button.
+3. Turn **Button Text ON**.
+4. Enter **Next Page**.
+5. Set **Font = Bold**, **Size = 16**, and **Alignment = Center**.
+6. Turn **Action ON**.
+7. Set **Type = Page Navigation**.
+8. Select **Page 2** as the destination.
+
+### Create a Back Button
+
+1. Go to **Page 2**.
+2. Insert another **Blank Button**.
+3. Turn **Action ON**.
+4. Set **Type = Back**.
+5. Test the button using **Ctrl + Click**.
+
+---
+
+# C. Bookmarks & Selection Pane
+
+## Theory
+
+**Bookmarks** save the current view of a report, while the **Selection Pane** controls which visuals are visible. Together, they allow users to switch between different report views, such as changing from a chart to a table, without leaving the page.
+
+### Practical Implementation
+
+### Create Bar View
+
+1. Place a **Stacked Column Chart** and a **Table** on the same position.
+2. Go to **View**.
+3. Open **Selection Pane** and **Bookmarks Pane**.
+4. Hide the **Table** using the eye icon.
+5. Keep the **Bar Chart** visible.
+6. Click **Add Bookmark**.
+7. Rename it **Bar View**.
+8. Right-click the bookmark and uncheck **Data**.
+
+### Create Table View
+
+1. Show the **Table**.
+2. Hide the **Bar Chart**.
+3. Click **Add Bookmark**.
+4. Rename it **Table View**.
+5. Right-click the bookmark and uncheck **Data**.
+
+### Assign Bookmarks to Buttons
+
+1. Insert two **Blank Buttons**.
+2. Rename them **Bar View** and **Table View**.
+3. Select the **Bar View** button.
+4. Turn **Action ON**.
+5. Set **Type = Bookmark**.
+6. Select **Bar View**.
+7. Repeat the same steps for the **Table View** button.
+8. Press **Ctrl + Click** on the buttons to switch between the chart and the table.
