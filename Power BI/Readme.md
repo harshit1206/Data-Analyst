@@ -1372,3 +1372,135 @@ Page Navigation Buttons allow users to move between report pages using custom bu
 6. Select **Bar View**.
 7. Repeat the same steps for the **Table View** button.
 8. Press **Ctrl + Click** on the buttons to switch between the chart and the table.
+
+------------------------------------------------------------------
+
+# SECTION 5 : Analyze
+
+The **Analyze** feature in Power BI helps users discover hidden patterns, trends, and insights from data. It provides AI-powered analysis tools, grouping options, forecasting, and advanced visuals to support better business decisions.
+
+---
+
+# 1. Analyze (AI Feature)
+
+### Theory
+
+The **Analyze** feature uses Power BI's built-in Artificial Intelligence (AI) and Natural Language Processing (NLP) to automatically explain trends, spikes, and decreases in your data. Instead of manually searching for insights, Power BI identifies the possible reasons behind changes in the data.
+
+### Practical Implementation
+
+1. Open any report containing a visual.
+2. Right-click any data point (e.g., **Electronics**).
+3. Click **Analyze**.
+4. Wait for Power BI to generate AI insights.
+5. Review the automatically generated explanations and comparisons.
+
+---
+
+# 2. Creating Groups
+
+### Theory
+
+Grouping combines multiple values into a single category to simplify analysis. Instead of analyzing every individual value, similar values can be grouped together for easier reporting.
+
+### Practical Implementation
+
+1. In the **Fields** pane, right-click the required column (e.g., **Region**).
+2. Select **New Group**.
+3. Select the values to group (e.g., **East** and **West**).
+4. Click **Group**.
+5. Rename the group (e.g., **Tier 1**).
+6. Click **OK**.
+7. Use the new grouped field in your visuals.
+
+---
+
+# 3. Creating Bins
+
+### Theory
+
+Bins divide continuous numerical values into equal ranges. They are useful for analyzing data distributions and creating histogram-like visuals.
+
+### Practical Implementation
+
+1. Right-click the **Total Sales** column.
+2. Select **New Group**.
+3. Change **Group Type** to **Bin**.
+4. Enter the **Bin Size** (e.g., **5000**).
+5. Rename the field as **Total Sales Bin**.
+6. Click **OK**.
+7. Use the new Bin field in charts.
+
+---
+
+# 4. Scatter Chart with Play Axis
+
+### Theory
+
+A Scatter Chart is used to analyze the relationship between two numerical values. Adding a **Play Axis** creates an animation that shows how data changes over time.
+
+### Practical Implementation
+
+1. Insert a **Scatter Chart**.
+2. Drag **Sum of Quantity** to the **X-Axis**.
+3. Drag **Total Sales** to the **Y-Axis**.
+4. Drag **Customer Name** or **Region** to **Legend**.
+5. Drag **Month Name** to the **Play Axis**.
+6. Click the **Play** button to view the animation.
+
+---
+
+# 5. Trend Lines & Forecasting
+
+### Theory
+
+Forecasting predicts future values using historical data. Power BI uses machine learning algorithms to estimate future trends and displays confidence intervals along with predicted values.
+
+### Practical Implementation
+
+1. Insert a **Line Chart**.
+2. Drag the **Date Hierarchy** to the **X-Axis**.
+3. Drag **Total Sales** to the **Y-Axis**.
+4. Open the **Analytics Pane** (Magnifying Glass icon).
+5. Turn **Forecast** ON.
+6. Set **Forecast Length** to **5**.
+7. Change the **Confidence Interval** to **90%**.
+8. Click **Apply**.
+9. Observe the forecast line and confidence range on the chart.
+
+# 6. Decomposition Tree
+
+### Theory
+
+The **Decomposition Tree** is an AI-powered visual that helps identify the root cause of a metric by breaking it down into different dimensions. It allows users to drill down through multiple levels of data and even lets Power BI automatically choose the most influential factor using AI.
+
+### Practical Implementation
+
+1. Insert a **Decomposition Tree** visual.
+2. Drag **Total Sales** to the **Analyze** field.
+3. Drag **Date Hierarchy**, **Product Name**, and **Unit Price** to the **Explain By** field.
+4. Click the **+** icon beside the root node.
+5. Select a field manually or choose **High Value** or **Low Value**.
+6. Power BI automatically breaks down the data into the most significant contributing factors.
+7. Continue expanding the tree to analyze the root cause in more detail.
+
+---
+
+# 7. Key Influencers Visual
+
+### Theory
+
+The **Key Influencers** visual uses Power BI's built-in Machine Learning to identify the factors that have the greatest impact on a selected metric. It also creates **Top Segments**, which group records with similar characteristics for deeper analysis.
+
+### Practical Implementation
+
+1. Insert a **Key Influencers** visual.
+2. Drag **Total Sales** to the **Analyze** field.
+3. Drag **Profit** to the **Explain By** field.
+4. Wait for Power BI to analyze the data.
+5. Open the **Key Influencers** tab to view the factors affecting Total Sales.
+6. Switch to the **Top Segments** tab to view automatically generated customer or product segments.
+7. Use the insights to understand which factors increase or decrease business performance.
+
+---
+
