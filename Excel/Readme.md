@@ -513,3 +513,303 @@ C$1
 2. Add `$` before the column or row that needs to remain fixed.
 3. Drag the formula horizontally or vertically.
 4. Verify that only the unlocked part changes.
+
+# SECTION 2 : Data Wrangling & Cleaning
+
+Data Wrangling is the process of taking raw, messy, and inconsistent data and transforming it into a clean and structured format. Excel provides formulas and built-in tools that make this cleaning process faster and easier.
+
+---
+
+# 1. Preparing the Wrangling Dataset
+
+### Theory
+
+Before cleaning data, it is useful to understand the dataset and identify the columns that need to be worked on. A clean workspace makes the transformation process easier to manage.
+
+### Practical Implementation
+
+1. Open the dataset containing columns such as **Name, Email, Department, Join Date, Leave Balance, Basic Salary, Bonus, Project Start, and Project End**.
+2. Create a **new worksheet**.
+3. Copy the required columns, such as **Name** and **Email**, into the new worksheet.
+4. Adjust the column widths so the data is clearly visible.
+
+---
+
+# 2. Removing Duplicates
+
+### Theory
+
+Duplicate records can lead to incorrect analysis because the same person or transaction may be counted multiple times. Excel's **Remove Duplicates** tool identifies and removes repeated records based on selected columns.
+
+### Practical Implementation
+
+1. Select the complete dataset.
+2. Go to **Data → Remove Duplicates**.
+3. In the dialog box, select the column that should be checked for duplicates.
+4. Click **OK**.
+5. Excel removes the duplicate records and displays a confirmation message.
+
+### Shortcut
+
+**No direct default shortcut** — use **Data → Remove Duplicates**.
+
+---
+
+# 3. Find & Replace
+
+### Theory
+
+**Find & Replace** is used to quickly correct spelling, capitalization, or other repeated inconsistencies throughout a dataset. Instead of manually changing every occurrence, Excel can replace all matching values at once.
+
+### Practical Implementation
+
+1. Select the required dataset.
+2. Press **Ctrl + A** if you want to select the current data range.
+3. Go to **Home → Find & Select → Replace**.
+4. Enter the incorrect value in **Find what**.
+5. Enter the corrected value in **Replace with**.
+6. Click **Replace All**.
+7. Verify the replacement results.
+
+### Shortcut
+
+**Ctrl + H** → Opens Find & Replace directly.
+
+---
+
+# 4. TRIM Function
+
+### Theory
+
+The **TRIM** function removes unnecessary spaces from text, especially leading, trailing, and repeated spaces. It is useful when raw data contains inconsistent spacing that can cause matching and analysis problems.
+
+### Practical Implementation
+
+1. Insert a new column using **Ctrl + Shift + +**.
+2. Give the new column an appropriate name.
+3. Select the first cell of the new column.
+4. Enter the TRIM formula using the original name cell.
+5. Press **Enter**.
+6. Use the **Fill Handle** to copy the formula down.
+7. Copy the cleaned column using **Ctrl + C**.
+8. Select the original column.
+9. Use **Paste Special → Values** to replace the original text with cleaned values.
+10. Hide the helper column if it is no longer required.
+11. To restore it, select the adjacent columns, right-click, and choose **Unhide**.
+
+---
+
+# 5. Case Transformation Functions
+
+Excel provides functions to standardize text capitalization. The three important functions are **UPPER, LOWER, and PROPER**.
+
+## UPPER
+
+### Theory
+
+**UPPER** converts all characters in a text value into uppercase letters.
+
+### Practical Implementation
+
+1. Select an empty cell beside the original data.
+2. Enter the `UPPER` formula using the required cell.
+3. Press **Enter**.
+4. Drag the formula down using the **Fill Handle**.
+
+---
+
+## LOWER
+
+### Theory
+
+**LOWER** converts all characters into lowercase letters. It is especially useful for standardizing email addresses.
+
+### Practical Implementation
+
+1. Create a helper column.
+2. Enter the `LOWER` formula using the email cell.
+3. Press **Enter**.
+4. Drag the formula down.
+5. Copy the cleaned results.
+6. Use **Paste Special → Values** if you want to replace the original data.
+
+---
+
+## PROPER
+
+### Theory
+
+**PROPER** capitalizes the first letter of each word and converts the remaining letters to lowercase. It is useful for cleaning names and other text fields.
+
+### Practical Implementation
+
+1. Create a helper column.
+2. Enter the `PROPER` formula using the required name cell.
+3. Press **Enter**.
+4. Drag the formula down using the **Fill Handle**.
+5. Copy and paste as values if the cleaned data needs to replace the original column.
+
+---
+
+# 6. Text Extraction Functions
+
+Excel provides **LEFT, RIGHT, and MID** functions to extract specific parts of a text value.
+
+---
+
+## LEFT
+
+### Theory
+
+**LEFT** extracts a specified number of characters from the beginning of a text string. It is useful when the required information is located at the start of the text.
+
+### Practical Implementation
+
+1. Select an empty cell.
+2. Enter the `LEFT` formula with the required cell and number of characters.
+3. Press **Enter**.
+4. Drag the formula down using the **Fill Handle**.
+
+---
+
+## RIGHT
+
+### Theory
+
+**RIGHT** extracts a specified number of characters from the end of a text string. It can be used to extract fixed-length information such as codes or domains when their length is known.
+
+### Practical Implementation
+
+1. Select an empty cell.
+2. Enter the `RIGHT` formula with the required cell and character count.
+3. Press **Enter**.
+4. Drag the formula down.
+
+---
+
+## MID
+
+### Theory
+
+**MID** extracts characters from the middle of a text string. It requires a starting position and the number of characters to extract.
+
+### Practical Implementation
+
+1. Select an empty cell.
+2. Enter the `MID` formula.
+3. Specify the **starting position**.
+4. Specify the **number of characters**.
+5. Press **Enter**.
+6. Drag the formula down.
+7. Check whether the starting position works consistently for all rows.
+
+> **Important:** MID can produce incorrect results when the position of the required text changes between rows.
+
+---
+
+# 7. Text to Columns
+
+### Theory
+
+**Text to Columns** separates data from one column into multiple columns. It can split data using a **delimiter** such as `@`, comma, or space, or using fixed character positions.
+
+### Practical Implementation
+
+### Delimited
+
+1. Select the column containing the text.
+2. Go to **Data → Text to Columns**.
+3. Select **Delimited**.
+4. Click **Next**.
+5. Select **Other** under delimiters.
+6. Enter the required delimiter, such as `@`.
+7. Click **Next**.
+8. Select the required destination cell.
+9. Click **Finish**.
+10. Verify that the text has been separated into different columns.
+
+### Fixed Width
+
+1. Select the required column.
+2. Go to **Data → Text to Columns**.
+3. Select **Fixed Width**.
+4. Click **Next**.
+5. Add the required break lines at fixed character positions.
+6. Click **Next**.
+7. Select the destination.
+8. Click **Finish**.
+
+---
+
+# 8. Concatenation
+
+### Theory
+
+Concatenation means combining text from multiple cells into a single text value. Excel provides **Ampersand (&), CONCAT, and TEXTJOIN** for combining text.
+
+---
+
+## Ampersand (&)
+
+### Practical Implementation
+
+1. Select the destination cell.
+2. Enter the formula using `&` to combine the required cells.
+3. Add `" "` between the cells if a space is required.
+4. Press **Enter**.
+5. Drag the formula down if required.
+
+---
+
+## CONCAT
+
+### Theory
+
+**CONCAT** combines multiple text values into one result. A space or other separator must be added manually when required.
+
+### Practical Implementation
+
+1. Select the destination cell.
+2. Enter the `CONCAT` formula.
+3. Add `" "` between values if a space is required.
+4. Press **Enter**.
+5. Drag the formula down.
+
+---
+
+## TEXTJOIN
+
+### Theory
+
+**TEXTJOIN** is useful when combining multiple cells with a chosen delimiter. It also allows you to decide whether empty cells should be ignored.
+
+### Practical Implementation
+
+1. Select the destination cell.
+2. Enter the `TEXTJOIN` formula.
+3. Specify the **delimiter**.
+4. Set **Ignore_Empty** to `TRUE` or `FALSE`.
+5. Select the cells to combine.
+6. Press **Enter**.
+
+---
+
+# 9. Flash Fill
+
+### Theory
+
+**Flash Fill** automatically detects a pattern from an example and fills the remaining cells without requiring formulas. It is useful for extracting or rearranging information from existing data.
+
+### Practical Implementation
+
+1. Create a new column for the required output.
+2. Enter the desired result manually in the first row.
+3. Select the cell directly below it.
+4. Go to **Home → Editing → Flash Fill**.
+5. Excel detects the pattern and fills the remaining rows.
+6. Review the generated results.
+
+### Shortcut
+
+**Ctrl + E** → Flash Fill.
+
