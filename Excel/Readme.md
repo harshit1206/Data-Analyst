@@ -813,3 +813,158 @@ Concatenation means combining text from multiple cells into a single text value.
 
 **Ctrl + E** → Flash Fill.
 
+
+## 10. Date & Time Functions
+
+### Theory
+
+Date and time functions help extract date/time parts and calculate differences between dates.
+
+### Important Functions
+
+```excel
+=TODAY()              → Current date
+=TODAY()-1            → Yesterday
+=TODAY()+1            → Tomorrow
+
+=YEAR(A2)             → Year
+=MONTH(A2)            → Month
+=DAY(A2)              → Day
+
+=HOUR(A1)             → Hour
+=MINUTE(A1)           → Minute
+=SECOND(A1)           → Second
+
+=DATEDIF(E2,F2,"Y")   → Complete years
+=DATEDIF(E2,F2,"M")   → Complete months
+=DATEDIF(E2,F2,"D")   → Complete days
+````
+
+### Practical
+
+1. Enter the required formula.
+2. Press **Enter**.
+3. Double-click the **Fill Handle** to apply it down.
+4. Use **Home → Number Format → Short Date** when required.
+
+---
+
+# 11. Gantt Chart
+
+### Theory
+
+A **Gantt Chart** shows project start dates and durations on a timeline, making it useful for tracking projects and deadlines.
+
+### Practical
+
+1. Create **Project Duration**.
+2. Calculate:
+
+```excel
+=Project_End-Project_Start
+```
+
+3. Go to **Insert → Bar Chart → 2-D Stacked Bar**.
+4. Right-click chart → **Select Data**.
+5. Add **Project Start** and **Project Duration** as series.
+6. Use **Employee Name** as Axis Labels.
+7. Select Project Start bars → **Format Data Series → No Fill**.
+8. The remaining bars represent the project duration.
+
+---
+
+# 12. Arithmetic Functions
+
+### Theory
+
+Arithmetic functions perform common calculations on numerical ranges.
+
+```excel
+=SUM(Range)       → Total
+=AVERAGE(Range)   → Average
+=PRODUCT(Range)   → Multiplication
+```
+
+### Practical
+
+1. Select the result cell.
+2. Enter the required function.
+3. Select the range.
+4. Press **Enter**.
+
+---
+
+# 13. IF Function
+
+### Theory
+
+`IF` checks a condition and returns one result if TRUE and another if FALSE.
+
+### Practical
+
+```excel
+=IF(C2>50000,"High","Low")
+```
+
+1. Enter the formula.
+2. Press **Enter**.
+3. Drag down using the Fill Handle.
+
+---
+
+# 14. IFS Function
+
+### Theory
+
+`IFS` checks multiple conditions and returns the result of the first TRUE condition.
+
+### Practical
+
+```excel
+=IFS(D2=1,"Excellent",D2=2,"Good",D2=3,"Average",D2=4,"Nice",D2=5,"Poor")
+```
+
+**Shortcut:** `Alt + Enter` → New line inside Formula Bar.
+
+---
+
+# 15. SWITCH Function
+
+### Theory
+
+`SWITCH` compares one value with multiple possible values and is cleaner than repeatedly writing the same condition with IFS.
+
+### Practical
+
+```excel
+=SWITCH(D2,1,"Excellent",2,"Good",3,"Average",4,"Nice",5,"Poor")
+```
+
+1. Enter the formula.
+2. Press **Enter**.
+3. Drag down.
+
+---
+
+# 16. AND & OR
+
+### Theory
+
+**AND** returns TRUE only when all conditions are TRUE. **OR** returns TRUE when at least one condition is TRUE.
+
+```excel
+=AND(B2="HR",B2="Marketing")
+=OR(B2="HR",B2="Marketing")
+```
+
+### Practical with IF
+
+```excel
+=IF(OR(B2="HR",B2="Marketing"),"Bonus","No Bonus")
+```
+
+1. Enter the formula.
+2. Press **Enter**.
+3. Drag down.
+
+**Note:** If the FALSE result is not specified in IF, Excel may return `FALSE`.
