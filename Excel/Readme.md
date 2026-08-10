@@ -968,3 +968,212 @@ Arithmetic functions perform common calculations on numerical ranges.
 3. Drag down.
 
 **Note:** If the FALSE result is not specified in IF, Excel may return `FALSE`.
+
+
+# 17. Lookup Functions
+
+### Theory
+
+Lookup functions are used to **find a value from one part of a dataset and return related information from another part**. VLOOKUP and HLOOKUP are traditional methods, while INDEX-MATCH and XLOOKUP provide more flexible ways to perform lookups.
+
+---
+
+## VLOOKUP
+
+### Theory
+
+**VLOOKUP (Vertical Lookup)** searches vertically in the first column of a selected table and returns a value from another column in the same row.
+
+### Practical
+
+1. Select the cell where you want the result.
+2. Enter the VLOOKUP formula.
+3. Select the lookup value.
+4. Select the table range.
+5. Specify the column number to return.
+6. Use `FALSE` for an exact match.
+7. Press **Enter**.
+
+---
+
+## HLOOKUP
+
+### Theory
+
+**HLOOKUP (Horizontal Lookup)** searches horizontally across the first row of a table and returns a value from a specified row below it.
+
+### Practical
+
+```excel
+=HLOOKUP("Basic Salary",Table_Range,3,FALSE)
+```
+
+1. Select the result cell.
+2. Enter the HLOOKUP formula.
+3. Specify the value to search for.
+4. Select the table range.
+5. Specify the row number.
+6. Use `FALSE` for an exact match.
+7. Press **Enter**.
+
+---
+
+## INDEX & MATCH
+
+### Theory
+
+**MATCH** finds the position of a value, while **INDEX** uses that position to return the required value. Together, they provide a flexible lookup method without requiring the complete table to be selected.
+
+### Practical
+
+```excel
+=INDEX(Basic_Salary_Column,MATCH("Jane Smith",Name_Column,0))
+```
+
+1. Select the result cell.
+2. Use `MATCH` to find the position of the required name.
+3. Use `INDEX` to return the corresponding salary.
+4. Press **Enter**.
+
+---
+
+## XLOOKUP
+
+### Theory
+
+**XLOOKUP** is a modern lookup function that searches one column or range and returns the corresponding value from another range. It can look both left and right and does not require selecting an entire table.
+
+### Practical
+
+```excel
+=XLOOKUP("Bob Brown",Name_Column,Salary_Column)
+```
+
+1. Select the result cell.
+2. Enter `XLOOKUP`.
+3. Select the value to search.
+4. Select the lookup column.
+5. Select the return column.
+6. Press **Enter**.
+
+---
+
+## LOOKUP
+
+### Theory
+
+**LOOKUP** is used for approximate matching. The lookup column must be **sorted in ascending order**; otherwise, the returned result may be incorrect.
+
+### Practical
+
+```excel
+=LOOKUP(52000,Salary_Column,Name_Column)
+```
+
+1. Sort the lookup column in ascending order.
+2. Enter the LOOKUP formula.
+3. Select the value to search.
+4. Select the lookup range.
+5. Select the return range.
+6. Press **Enter**.
+
+---
+
+## IFERROR
+
+### Theory
+
+**IFERROR** handles formula errors and replaces them with a meaningful message instead of displaying errors such as `#N/A`.
+
+### Practical
+
+```excel
+=IFERROR(XLOOKUP(...),"User Error")
+```
+
+1. Write the lookup formula.
+2. Wrap it inside `IFERROR`.
+3. Specify the message to display if an error occurs.
+4. Press **Enter**.
+
+---
+
+# 18. Sorting
+
+### Theory
+
+Sorting arranges data in a specific order, such as smallest to largest, largest to smallest, or alphabetically. Excel also allows multiple sorting levels.
+
+### Practical
+
+1. Select the dataset.
+2. Go to **Data → Sort**.
+3. Select the column to sort by.
+4. Choose the sorting order.
+5. Use **Add Level** for additional sorting conditions.
+6. Click **OK**.
+
+---
+
+# 19. Filtering
+
+### Theory
+
+Filtering temporarily hides rows that do not match the selected condition. It allows you to focus only on the records required for analysis.
+
+### Practical
+
+1. Select the dataset headers.
+2. Go to **Data → Filter**.
+3. Click the dropdown arrow on the required column.
+4. Select the required values or condition.
+
+### Examples
+
+- **Text:** Select only `Marketing`.
+- **Numbers:** Select **Number Filters → Greater Than → 60000**.
+
+---
+
+# 20. Grouping
+
+### Theory
+
+Grouping combines rows into collapsible sections. It is useful when you want to hide or show related groups of data without deleting them.
+
+### Practical
+
+1. Sort the data if required.
+2. Select the rows you want to group.
+3. Go to **Data → Group**.
+4. Excel creates a grouping bracket on the left.
+5. Use the **+ / −** buttons to expand or collapse the group.
+
+---
+
+# 21. Subtotals
+
+### Theory
+
+**Subtotal** automatically calculates summaries for different groups in a dataset. It can calculate SUM, AVERAGE, COUNT, and other functions for each category along with a Grand Total.
+
+### Practical
+
+1. Sort the dataset according to the column you want to group by.
+2. Select the dataset.
+3. Go to **Data → Subtotal**.
+4. Under **At each change in**, select the grouping column.
+5. Under **Use function**, select the required function such as **SUM**.
+6. Under **Add subtotal to**, select the required numerical column.
+7. Click **OK**.
+8. Excel creates subtotals for each group and a **Grand Total**.
+
+### Example Configuration
+
+```text
+At each change in → Department
+Use function      → SUM
+Add subtotal to   → Basic Salary
+```
+
+You can change **SUM** to **AVERAGE** when you want the average value for each group.
