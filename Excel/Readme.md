@@ -1177,3 +1177,397 @@ Add subtotal to   → Basic Salary
 ```
 
 You can change **SUM** to **AVERAGE** when you want the average value for each group.
+
+
+# SECTION 3 : Data Wrangling & Cleaning using Power Query Editor
+
+Power Query Editor is used to import, clean, transform, and prepare raw data automatically. Unlike manual Excel cleaning, Power Query records every transformation as an **Applied Step**, making the process repeatable and easier to manage.
+
+---
+
+# 1. Loading Data & Power Query Interface
+
+### Theory
+
+Power Query can connect to external files and transform their data before loading it into Excel. The main tabs are **Home, Transform, Add Column, and View**, each providing different transformation and data-management tools.
+
+### Practical Implementation
+
+1. Go to **Data → Get Data → From File → From Excel Workbook**.
+2. Select **Power Query Regular**.
+3. In the Navigator, select:
+   - `raw data`
+   - `more employees`
+   - `department data`
+4. Click **Transform Data**.
+5. Power Query Editor will open.
+
+### Important Tabs
+
+- **Home** → Main data management, merge, append, remove columns, headers.
+- **Transform** → Modify existing columns.
+- **Add Column** → Create new calculated/derived columns.
+- **View** → Data preview, profiling, and workspace options.
+
+---
+
+# 2. Checking Data Quality
+
+### Theory
+
+Before cleaning data, check its quality to identify **valid, error, and empty values**. Power Query provides Column Quality, Column Distribution, and Column Profile for this purpose.
+
+### Practical Implementation
+
+1. Open the **View** tab.
+2. Turn ON **Column Quality**.
+3. Turn ON **Column Distribution**.
+4. Turn ON **Column Profile**.
+5. Check the percentage of **Valid, Error, and Empty** values.
+6. Check statistics such as **Minimum, Maximum, Average, Distinct, and Unique** values.
+
+---
+
+# 3. Table Properties & Applied Steps
+
+### Theory
+
+The **Properties Pane** allows you to rename queries, while **Applied Steps** stores every transformation performed on the data. Power Query also generates **M-code** in the background to represent these transformations.
+
+### Practical Implementation
+
+1. Select `raw data` from the Queries pane.
+2. In the **Properties** section, rename it to **Employee Table**.
+3. Look at the **Applied Steps** pane.
+4. Each transformation will appear as a separate step.
+5. Click the **X** beside a step to remove it.
+6. Right-click a step → **Rename** to give it a meaningful name.
+
+---
+
+# 4. Cleaning Columns
+
+## A. Trim Full Name
+
+### Theory
+
+**Trim** removes unnecessary spaces from text, especially leading and trailing spaces, making names consistent.
+
+### Practical Implementation
+
+1. Select **Full Name**.
+2. Right-click the column.
+3. Select **Transform → Trim**.
+4. Go to **Applied Steps**.
+5. Right-click `Trimmed Text`.
+6. Select **Rename**.
+7. Rename it to **Trim Full Name Text**.
+
+---
+
+## B. Replace Email Errors
+
+### Theory
+
+Incorrect values such as `#Error` can be replaced with meaningful values such as `NA` so the column becomes usable for analysis.
+
+### Practical Implementation
+
+1. Select the **Email** column.
+2. Go to **Transform → Replace Values**.
+3. Enter `#Error` in **Value To Find**.
+4. Enter `NA` in **Replace With**.
+5. Click **OK**.
+
+---
+
+## C. Replace Department Nulls
+
+### Theory
+
+Null values represent missing data. Replacing them with a consistent value such as `NA` makes the dataset easier to analyze.
+
+### Practical Implementation
+
+1. Select the **Department** column.
+2. Go to **Transform → Replace Values**.
+3. Enter `null` in **Value To Find**.
+4. Enter `NA` in **Replace With**.
+5. Click **OK**.
+
+---
+
+## D. Change Data Types
+
+### Theory
+
+Correct data types are important because Power Query needs to understand whether a value is a date, number, text, or currency before performing calculations.
+
+### Practical Implementation
+
+#### Join Date & End Date
+
+1. Select **Join Date** and **End Date**.
+2. Click the **Data Type icon** on the column header.
+3. Select **Date**.
+
+#### Salary
+
+1. Select **Salary**.
+2. Click the **Data Type icon**.
+3. Select **Currency**.
+
+---
+
+# 5. Aligning Other Tables
+
+### Theory
+
+Tables should use compatible data types before performing operations such as **Merge** or **Append**. This ensures that matching columns can be processed correctly.
+
+### Practical Implementation
+
+#### More Employees
+
+1. Select **more employees** from the Queries pane.
+2. Change **Join Date** to **Date**.
+3. Change **End Date** to **Date**.
+4. Change **Salary** to **Currency**.
+
+#### Department Data
+
+1. Select **department data**.
+2. Go to **Home → Use First Row as Headers**.
+3. The columns will become:
+   - Department
+   - Department Head
+   - Location
+
+---
+
+# 6. Creating New Columns
+
+## A. Index Column
+
+### Theory
+
+An **Index Column** creates sequential numbers and can be used as a unique identifier or surrogate key when the source data does not have one.
+
+### Practical Implementation
+
+1. Go to **Add Column**.
+2. Click **Index Column**.
+3. Select **From 1**.
+4. Power Query generates `1, 2, 3...` automatically.
+
+---
+
+## B. Conditional Column
+
+### Theory
+
+A **Conditional Column** creates categories using IF-ELSE style conditions. It is useful for converting numerical values into meaningful groups.
+
+### Practical Implementation
+
+1. Go to **Add Column → Conditional Column**.
+2. Name it **Salary Status**.
+3. Set:
+   - If Salary `<= 50000` → **Low**
+   - Else If Salary `<= 70000` → **Average**
+   - Else → **High**
+4. Click **OK**.
+
+---
+
+## C. Custom Column
+
+### Theory
+
+A **Custom Column** allows you to create a new column using formulas or expressions based on existing columns.
+
+### Practical Implementation
+
+1. Go to **Add Column → Custom Column**.
+2. Enter the new column name.
+3. Write the required calculation using existing columns.
+4. Click **OK**.
+5. Power Query creates the new calculated column.
+
+---
+
+# 7. Creating EMP ID
+
+### Theory
+
+Text extraction can be used to generate useful identifiers from existing data. Here, the username portion of an email is extracted and converted into an **EMP ID** column.
+
+### Practical Implementation
+
+1. Select the **Email** column.
+2. Go to **Add Column → Extract → Text Before Delimiter**.
+3. Enter `@` as the delimiter.
+4. Click **OK**.
+5. Select the newly created column.
+6. Go to **Transform → Replace Values**.
+7. Replace `NA` with `EMP`.
+8. Double-click the column header.
+9. Rename it to **EMP ID**.
+10. Drag the column to the far left.
+11. Power Query records the movement as **Reordered Columns**.
+
+---
+
+# 8. Append vs. Merge Queries
+
+### Theory
+
+**Append** and **Merge** are used to combine datasets, but they work differently. **Append** adds rows from one table below another, while **Merge** adds columns by matching a common field such as a Department or ID.
+
+- **Append → Vertical → Adds Rows**
+- **Merge → Horizontal → Adds Columns**
+
+---
+
+## Append Queries
+
+### Practical Implementation
+
+1. Select the **Employee Table**.
+2. Go to **Home → Append Queries**.
+3. Select **More Employees**.
+4. Click **OK**.
+5. The rows from More Employees are added below Employee Table.
+
+### Important
+
+Both tables should have matching column structures. If one table contains extra columns, the other table will contain `null` values for those columns.
+
+---
+
+## Merge Queries
+
+### Practical Implementation
+
+1. Select **Employee Table**.
+2. Go to **Home → Merge Queries**.
+3. Select **Department Data**.
+4. Select the **Department** column in Employee Table.
+5. Select the **Department** column in Department Data.
+6. Click **OK**.
+7. A new **Table** column will appear.
+8. Click the **Expand icon** on that column.
+9. Uncheck **Use original column name as prefix**.
+10. Select **Department Head** and **Location**.
+11. Click **OK**.
+12. Replace remaining `null` values with `NA` if required.
+
+---
+
+# 9. Transpose, Pivot & Unpivot
+
+## Transpose
+
+### Theory
+
+**Transpose** completely switches the structure of a table by converting rows into columns and columns into rows.
+
+### Practical Implementation
+
+1. Select the required table.
+2. Go to **Transform → Transpose**.
+3. Power Query swaps the rows and columns.
+4. Review the new structure.
+
+---
+
+## Unpivot Columns
+
+### Theory
+
+**Unpivot** converts a wide table into a narrow/normalized structure. Multiple columns such as Q1, Q2, Q3, and Q4 are converted into **Attribute** and **Value** columns.
+
+### Practical Implementation
+
+1. Select the columns **Q1, Q2, Q3, Q4**.
+2. Go to **Transform → Unpivot Columns**.
+3. Power Query creates:
+   - **Attribute** → Q1, Q2, Q3, Q4
+   - **Value** → Corresponding sales values
+4. Review the normalized table.
+
+---
+
+## Pivot Column
+
+### Theory
+
+**Pivot** performs the opposite operation of unpivot. It converts categorical row values into separate columns.
+
+### Practical Implementation
+
+1. Select the **Attribute** column.
+2. Go to **Transform → Pivot Column**.
+3. Select **Value** as the values column.
+4. Click **OK**.
+5. The attributes become separate columns such as **Q1, Q2, Q3, Q4**.
+
+---
+
+# 10. Close & Load
+
+### Theory
+
+After all transformations are completed, **Close & Load** applies the Power Query steps and loads the transformed data back into Excel as a table.
+
+### Practical Implementation
+
+1. Go to **Home → Close & Load**.
+2. Power Query Editor closes.
+3. Excel creates/updates the output worksheet.
+4. Select the loaded table.
+5. Go to **Data → Filter** if you want to remove the filter dropdowns.
+6. Apply formatting to make the final table clean and readable.
+
+---
+
+# Key Power Query Workflow
+
+```text
+Get Data
+   ↓
+Transform Data
+   ↓
+Check Data Quality
+   ↓
+Clean & Transform
+   ↓
+Change Data Types
+   ↓
+Create New Columns
+   ↓
+Append / Merge
+   ↓
+Pivot / Unpivot
+   ↓
+Review Applied Steps
+   ↓
+Close & Load
+   ↓
+Clean Data in Excel
+```
+Get Data
+   ↓
+Transform Data
+   ↓
+Check Data Quality
+   ↓
+Clean & Transform
+   ↓
+Change Data Types
+   ↓
+Create New Columns
+   ↓
+Review Applied Steps
+   ↓
+Load Clean Data
