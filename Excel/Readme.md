@@ -1571,3 +1571,130 @@ Create New Columns
 Review Applied Steps
    ↓
 Load Clean Data
+
+
+# SECTION 4 : Data Modeling & Power Pivot in Excel
+
+## 1. Foundations of Data Modeling
+
+### Theory
+
+Data Modeling organizes data into multiple structured tables instead of keeping everything inside one large flat table. This improves organization and makes it easier to connect and analyze related data.
+
+- **Fact Table:** Contains numerical transactions, metrics, and foreign keys.
+- **Dimension Table:** Contains descriptive information about entities.
+- **Star Schema:** One central Fact table connected directly to multiple Dimension tables.
+- **Snowflake Schema:** A Star Schema where dimension tables are further divided into related sub-dimensions.
+
+---
+
+## 2. Activating Power Pivot
+
+### Theory
+
+Power Pivot is Excel's data modeling engine that allows you to create relationships between tables and use DAX for advanced calculations.
+
+### Practical Implementation
+
+1. Go to **File → Options**.
+2. Select **Add-ins**.
+3. At the bottom, select **COM Add-ins** from the Manage dropdown.
+4. Click **Go**.
+5. Check **Microsoft Power Pivot for Excel**.
+6. Click **OK**.
+7. The **Power Pivot** tab will appear in Excel.
+
+---
+
+## 3. Importing Data into Power Pivot
+
+### Theory
+
+Power Pivot can contain multiple related tables inside a single data model. The dataset used contains one Fact table and three Dimension tables.
+
+### Tables
+
+- **sales** → Fact table
+- **date** → Dimension table
+- **department** → Dimension table
+- **employees** → Dimension table
+
+### Practical Implementation
+
+1. Go to the **Power Pivot** tab.
+2. Click **Manage**.
+3. In the Power Pivot window, go to **Home**.
+4. Click **From Other Sources**.
+5. Select **Excel File**.
+6. Browse and select the workbook.
+7. Select the required tables.
+8. Check **Use first row as headers**.
+9. Click **Finish**.
+
+---
+
+# 4. Creating Relationships
+
+## Theory
+
+Relationships connect tables through common columns. A typical relationship is **One-to-Many (1:*)**, where the Dimension table contains unique values and the Fact table contains repeated foreign-key values.
+
+### Practical Implementation
+
+1. Open the Power Pivot window.
+2. Switch from **Data View → Diagram View**.
+3. Drag `employee_id` from **employees** to `employee_id` in **sales**.
+4. Drag `department_id` from **employees** to `department_id` in **department**.
+5. Drag `date` from **date** to `sales_date` in **sales**.
+
+### Relationship Settings
+
+- **1:** Unique value in the Dimension table.
+- **\*:** Repeated values in the Fact table.
+- **Solid Line:** Active relationship.
+- **Dotted Line:** Inactive relationship.
+- **Single:** Preferred filter direction from Dimension → Fact.
+
+Avoid **Both/Bi-directional** filtering unless necessary because it can reduce performance.
+
+---
+
+# 5. Formatting Data
+
+### Theory
+
+Correct data types and formats ensure that dates and numerical values are displayed and processed correctly.
+
+### Practical Implementation
+
+1. Switch to **Data View**.
+2. Select `sales_date`.
+3. Change its format to **Short Date**.
+4. Select `Salary`.
+5. Change its format to **Currency (Rupees)**.
+
+---
+
+# 6. Creating a Date Hierarchy
+
+### Theory
+
+A Date Hierarchy organizes date information into levels so users can drill down from **Year → Quarter → Month** in PivotTables.
+
+### Practical Implementation
+
+1. Open the **date** table.
+2. Right-click **Year**.
+3. Select **Create Hierarchy**.
+4. Rename it to **Date Hierarchy**.
+5. Right-click **Quarter**.
+6. Select **Add to hierarchy → Date Hierarchy**.
+7. Repeat for **Month**.
+8. The hierarchy becomes:
+
+```text
+Year
+ ↓
+Quarter
+ ↓
+Month
