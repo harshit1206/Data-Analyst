@@ -1699,4 +1699,285 @@ Quarter
  ↓
 Month
 
-# Section 4
+
+
+# SECTION 4 : Data Modeling & DAX in Excel
+
+## 1. Foundations of Data Modeling
+
+### Theory
+
+Data Modeling organizes data into multiple structured tables instead of one large flat table. This improves performance and makes relationships between different types of data easier to manage.
+
+- **Fact Table:** Stores numerical transactions, metrics, and foreign keys.
+- **Dimension Table:** Stores descriptive information such as customers, departments, and dates.
+- **Star Schema:** One central Fact table connected directly to multiple Dimension tables.
+- **Snowflake Schema:** Dimension tables are further divided into related sub-dimensions.
+
+---
+
+## 2. Activating Power Pivot
+
+### Theory
+
+Power Pivot is Excel's engine for creating data models, relationships, and DAX calculations.
+
+### Practical Implementation
+
+1. Go to **File → Options**.
+2. Select **Add-ins**.
+3. Select **COM Add-ins** from the Manage dropdown.
+4. Click **Go**.
+5. Check **Microsoft Power Pivot for Excel**.
+6. Click **OK**.
+7. The **Power Pivot** tab will appear.
+
+---
+
+## 3. Importing Data
+
+### Theory
+
+Power Pivot allows multiple tables to be imported into one data model and connected through relationships.
+
+The dataset contains:
+
+- `sales` → Fact Table
+- `date` → Dimension Table
+- `department` → Dimension Table
+- `employees` → Dimension Table
+
+### Practical Implementation
+
+1. Go to **Power Pivot → Manage**.
+2. Click **Home → From Other Sources**.
+3. Select **Excel File**.
+4. Browse and select the workbook.
+5. Check **Use first row as headers**.
+6. Complete the import.
+
+---
+
+# 4. Creating Relationships
+
+### Theory
+
+Relationships connect tables using common columns. A **One-to-Many (1:*)** relationship means the Dimension table contains unique values while the Fact table can contain repeated values.
+
+### Practical Implementation
+
+1. Open the Power Pivot window.
+2. Switch to **Diagram View**.
+3. Drag `employee_id` from `employees` to `employee_id` in `sales`.
+4. Connect `department_id` between `employees` and `department`.
+5. Connect `date` from `date` to `sales_date` in `sales`.
+
+### Relationship States
+
+- **Solid Line** → Active relationship.
+- **Dotted Line** → Inactive relationship.
+- Inactive relationships can be used explicitly with DAX such as `USERELATIONSHIP`.
+
+---
+
+# 5. Calculated Columns vs Measures
+
+### Theory
+
+**Calculated Columns** are calculated row-by-row using Row Context and are physically stored in the model. **Measures** are calculated dynamically according to the current Filter Context and are better suited for aggregations.
+
+| Feature | Calculated Column | Measure |
+|---|---|---|
+| Context | Row Context | Filter Context |
+| Calculation | Row-by-row | Dynamically |
+| Storage | Physically stored | Calculated when required |
+| Use | Row-level values | Aggregated metrics |
+
+---
+
+# 6. DAX Aggregation Functions
+
+### Theory
+
+Aggregation functions summarize numerical data and are commonly created as **Measures**.
+
+### SUM
+
+```DAX
+Total Sales Sum := SUM(sales[sale_amount])
+````
+
+Calculates total sales.
+
+### MIN / MAX
+
+```DAX
+Min Unit Price := MIN(sales[unit_price])
+```
+
+Returns the minimum unit price.
+
+### DISTINCTCOUNT
+
+```DAX
+Unique EMP := DISTINCTCOUNT(sales[employee_id])
+```
+
+Counts unique employees.
+
+### SUMX
+
+`SUMX` is an iterator that evaluates an expression row-by-row and then adds the results.
+
+```DAX
+Total Revenue With Tax :=
+SUMX(sales, sales[sales_amount] * 1.18)
+```
+
+---
+
+# 7. Logical Functions
+
+### Theory
+
+Logical functions apply conditions to individual rows and are commonly used for calculated columns.
+
+### IF
+
+```DAX
+Sales Level =
+IF(sales[sale_amount] >= 30000, "High", "Low")
+```
+
+### SWITCH
+
+```DAX
+Sales Category =
+SWITCH(
+    TRUE(),
+    [sales_amount] >= 5000, "Very High",
+    [sales_amount] >= 1000, "Medium",
+    "Low"
+)
+```
+
+### IFERROR
+
+```DAX
+Divide =
+IFERROR(sales[sales_amount] / sales[quantity], 0)
+```
+
+Returns `0` instead of an error when the calculation fails.
+
+---
+
+# 8. Filter & Relationship Functions
+
+## CALCULATE
+
+### Theory
+
+`CALCULATE` modifies the existing filter context and applies additional filters to a calculation.
+
+```DAX
+Sales East :=
+CALCULATE(
+    SUM(sales[sales_amount]),
+    region[name] = "East"
+)
+```
+
+---
+
+## ALL
+
+### Theory
+
+`ALL` removes filters from the specified table or column.
+
+```DAX
+All Sales :=
+CALCULATE(
+    SUM(sales[sales_amount]),
+    ALL(sales)
+)
+```
+
+---
+
+## RELATED
+
+### Theory
+
+`RELATED` retrieves a value from a related table through an active relationship.
+
+```DAX
+Product Name = RELATED(products[product_name])
+```
+
+---
+
+## LOOKUPVALUE
+
+### Theory
+
+`LOOKUPVALUE` retrieves a value by matching specified columns and values. It can be useful when the required relationship is not being used directly.
+
+---
+
+# 9. Time Intelligence Functions
+
+### Theory
+
+Time Intelligence functions analyze data across periods such as months, years, and previous periods. They require a proper continuous Date table.
+
+### TOTALYTD / TOTALMTD
+
+```DAX
+YTD Sales :=
+TOTALYTD(
+    SUM(sales[sale_amount]),
+    date[date]
+)
+```
+
+Calculates sales cumulatively for the year.
+
+### DATEADD
+
+```DAX
+Sales Last Month :=
+CALCULATE(
+    SUM(sales[sale_amount]),
+    DATEADD(date[date], -1, MONTH)
+)
+```
+
+Shifts the current date context by one month.
+
+### SAMEPERIODLASTYEAR
+
+Returns the corresponding period from the previous year and is commonly used for year-over-year comparisons.
+
+---
+
+# Key Data Modeling Workflow
+
+Enable Power Pivot
+        ↓
+Import Tables
+        ↓
+Create Relationships
+        ↓
+Build Data Model
+        ↓
+Create Calculated Columns
+        ↓
+Create DAX Measures
+        ↓
+Apply Filters & Relationships
+        ↓
+Use Time Intelligence
+        ↓
+Analyze Data
