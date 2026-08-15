@@ -1981,3 +1981,267 @@ Apply Filters & Relationships
 Use Time Intelligence
         ↓
 Analyze Data
+
+
+# SECTION 5 : Analyzing & Visualizing Data
+
+## 1. Core Visual Enhancements
+
+### Theory
+
+Before creating dashboards, Excel provides basic tools to make large datasets easier to read and analyze.
+
+### Practical Implementation
+
+#### Freeze Panes
+
+1. Go to **View**.
+2. Click **Freeze Panes**.
+3. Select **Freeze Top Row**.
+
+#### Conditional Formatting
+
+1. Select the required data.
+2. Go to **Home → Conditional Formatting**.
+3. Choose the required rule:
+   - **Highlight Cells** → Highlight values such as `>7000`.
+   - **Top/Bottom Rules** → Highlight top values.
+   - **Data Bars** → Display values using bars.
+   - **Color Scales** → Display low-to-high values using colors.
+
+---
+
+# 2. Pivot Tables & Data Modeling
+
+### Theory
+
+Pivot Tables summarize large datasets and allow users to analyze data using rows, columns, values, filters, and hierarchies.
+
+### Practical Implementation
+
+#### Create Date Hierarchy
+
+1. Open **Power Pivot**.
+2. Right-click **Year**.
+3. Select **Create Hierarchy**.
+4. Rename it **Date Hierarchy**.
+5. Add **Quarter** and **Month** to the hierarchy.
+
+#### Create Pivot Table
+
+1. In Power Pivot, click **Pivot Table**.
+2. Select **New Worksheet**.
+3. Drag **Date Hierarchy** into **Rows**.
+4. Drag **Region** into **Columns**.
+5. Drag **Total Sales** into **Values**.
+6. Drag **Category** into **Filters**.
+7. Use the **+ / −** buttons to drill down through the Date Hierarchy.
+
+### Value Field Settings
+
+1. Right-click a value in the Pivot Table.
+2. Select **Value Field Settings**.
+3. Change the calculation to:
+   - Sum
+   - Average
+   - Count
+   - Min
+   - Max
+4. Use **Show Values As** to display percentages such as **% of Grand Total**.
+
+---
+
+# 3. Calculated Fields vs Power Pivot Measures
+
+### Theory
+
+Power Pivot uses **DAX Measures** for calculations, while standard Excel PivotTables can use **Calculated Fields**.
+
+### Practical Implementation
+
+#### Power Pivot
+
+1. Open **Power Pivot**.
+2. Create a new **Measure**.
+3. Write the required DAX calculation.
+
+#### Standard PivotTable
+
+1. Select the PivotTable.
+2. Go to **PivotTable Analyze**.
+3. Select **Fields, Items & Sets**.
+4. Click **Calculated Field**.
+5. Enter the formula:
+
+```excel
+=Sales+(Sales*0.18)
+````
+
+---
+
+# 4. KPIs
+
+### Theory
+
+KPIs compare an actual value against a target and use visual indicators to show performance.
+
+### Practical Implementation
+
+1. Open **Power Pivot**.
+2. Go to **KPIs → New KPI**.
+3. Select **Total Sales** as the base value.
+4. Set the target to **2000**.
+5. Set thresholds:
+
+   * Below `1000` → Red
+   * `1000–3000` → Yellow
+   * Above `3000` → Green
+6. Add the KPI Status field to the PivotTable.
+
+---
+
+# 5. Slicers & Timelines
+
+### Theory
+
+Slicers and Timelines provide interactive filtering controls for PivotTables and dashboards.
+
+### Practical Implementation
+
+#### Slicer
+
+1. Select the PivotTable.
+2. Go to **Insert → Slicer**.
+3. Select **Region**.
+4. Change the slicer style to **Tiles**.
+5. Use the tiles to filter the report.
+
+#### Timeline
+
+1. Select the PivotTable.
+2. Go to **PivotTable Analyze → Insert Timeline**.
+3. Select **Date**.
+4. Use the timeline to filter by Year, Quarter, or Month.
+
+#### Report Connections
+
+1. Right-click the Slicer.
+2. Select **Report Connections**.
+3. Check the PivotTables you want the slicer to control.
+4. Click **OK**.
+
+---
+
+# 6. Charts & Visualizations
+
+### Theory
+
+Different charts communicate different types of information. Choose the chart according to the question you want the data to answer.
+
+### Important Charts
+
+* **Column Chart** → Compare categories such as regional sales.
+* **Bar Chart** → Horizontal comparison such as profit by region.
+* **Line Chart** → Show trends over time.
+* **Pie Chart** → Show category share.
+* **Area Chart** → Show trends and cumulative areas.
+* **Combo Chart** → Combine Column and Line charts.
+* **Sparklines** → Small charts inside individual cells.
+
+### Practical: Sparkline
+
+1. Select the destination cells.
+2. Go to **Insert → Sparklines**.
+3. Choose **Line** or **Column**.
+4. Select the source data.
+5. Click **OK**.
+
+---
+
+# 7. Developer Tools & Dynamic Controls
+
+### Theory
+
+Developer Form Controls can make dashboards interactive by allowing users to select options or toggle information.
+
+### Enable Developer Tab
+
+1. Go to **File → Options**.
+2. Select **Customize Ribbon**.
+3. Enable **Developer**.
+4. Click **OK**.
+
+### Checkbox
+
+1. Go to **Developer → Insert**.
+2. Select **Checkbox**.
+3. Create the checkbox.
+4. Link it to a cell such as `N1`.
+5. Use an IF formula:
+
+```excel
+=IF(N1=True,Target-Sales,"N/A")
+```
+
+### Combo Box
+
+1. Go to **Developer → Insert**.
+2. Select **Combo Box**.
+3. Create the dropdown.
+4. Add options such as:
+
+   * Sales
+   * Quantity
+   * Unit Price
+5. Use `CHOOSE` to return the selected value:
+
+```excel
+=CHOOSE(Index_Cell,Sales_Value,Quantity_Value,Price_Value)
+```
+
+---
+
+# 8. Specialized Statistical Charts
+
+### Theory
+
+Some specialized Excel charts work directly with standard data ranges rather than PivotTables.
+
+* **Tree Map** → Shows hierarchical data using differently sized tiles.
+* **Box & Whisker** → Displays the five-number summary and helps identify outliers.
+* **Funnel Chart** → Shows values across sequential stages.
+* **Waterfall Chart** → Shows the cumulative effect of positive and negative values.
+
+---
+
+# 9. Dashboard Design Principles
+
+### Theory
+
+A professional dashboard should have a clear visual flow, placing filters and important insights where users can access them quickly.
+
+### Recommended Layout
+
+```text
+TOP
+↓
+Slicers & Timelines
+↓
+MIDDLE
+↓
+Summary Charts / KPIs
+↓
+BOTTOM
+↓
+Detailed Trend Charts
+```
+
+### Interactivity
+
+Use **Bookmarks** and the **Selection Pane** to switch between different dashboard views, such as:
+
+```text
+Bar View ↔ Table View
+```
+
+This makes the dashboard more interactive without creating separate pages for every view.
